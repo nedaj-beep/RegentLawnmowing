@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regent Lawn Mowing & Cleaning Services</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            regent: {
+              50:  '#f0f9eb',
+              100: '#d9f0c8',
+              200: '#b4e193',
+              300: '#84cb57',
+              400: '#5ab133',
+              500: '#3d8f1f',
+              600: '#2d7018',
+              700: '#245912',
+              800: '#1d4610',
+              900: '#163510',
+            },
+          },
+          fontFamily: {
+            display: ['"Playfair Display"', 'Georgia', 'serif'],
+            body: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          letterSpacing: {
+            tight2: '-0.03em',
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+
+    /* ── Testimonial scrolling columns (adapted from component 2) ── */
+    @keyframes scroll-up {
+      0%   { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+    .scroll-col { overflow: hidden; }
+    .scroll-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      animation: scroll-up linear infinite;
+    }
+    .scroll-inner--fast  { animation-duration: 22s; }
+    .scroll-inner--mid   { animation-duration: 28s; }
+    .scroll-inner--slow  { animation-duration: 34s; }
+    .scroll-col:hover .scroll-inner { animation-play-state: paused; }
+
+    /* ── Image auto-slider (adapted from component 7) ── */
+    @keyframes scroll-right {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .img-slider-track {
+      display: flex;
+      gap: 1.25rem;
+      width: max-content;
+      animation: scroll-right 28s linear infinite;
+    }
+    .img-slider-wrap {
+      -webkit-mask: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+      mask: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+      overflow: hidden;
+    }
+
+    /* ── Navbar pill hover (adapted from component 3 / glow-menu) ── */
+    .nav-link {
+      position: relative;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #374151;
+      text-decoration: none;
+      padding: 0.375rem 0.75rem;
+      border-radius: 9999px;
+      transition: color 0.2s cubic-bezier(0.22,1,0.36,1),
+                  background-color 0.2s cubic-bezier(0.22,1,0.36,1);
+    }
+    .nav-link:hover { color: #245912; background: #d9f0c8; }
+
+    /* ── Button active state ── */
+    .btn-primary {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: #2d7018; color: #fff;
+      padding: 0.625rem 1.5rem; border-radius: 9999px;
+      font-size: 0.875rem; font-weight: 600; letter-spacing: 0.01em;
+      text-decoration: none; border: none; cursor: pointer;
+      box-shadow: 0 2px 12px 0 rgba(45,112,24,0.22), 0 1px 3px 0 rgba(45,112,24,0.18);
+      transition: background 0.18s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.14s cubic-bezier(0.22,1,0.36,1),
+                  box-shadow 0.18s cubic-bezier(0.22,1,0.36,1);
+    }
+    .btn-primary:hover  { background: #245912; transform: translateY(-1px); box-shadow: 0 4px 20px 0 rgba(45,112,24,0.28); }
+    .btn-primary:active { transform: translateY(0); box-shadow: 0 1px 6px 0 rgba(45,112,24,0.18); }
+    .btn-primary:focus-visible { outline: 2px solid #5ab133; outline-offset: 3px; }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 2px solid #2d7018; color: #2d7018;
+      padding: 0.625rem 1.5rem; border-radius: 9999px;
+      font-size: 0.875rem; font-weight: 600;
+      text-decoration: none; background: transparent; cursor: pointer;
+      transition: background 0.18s, color 0.18s, transform 0.14s;
+    }
+    .btn-outline:hover  { background: #2d7018; color: #fff; transform: translateY(-1px); }
+    .btn-outline:active { transform: translateY(0); }
+    .btn-outline:focus-visible { outline: 2px solid #5ab133; outline-offset: 3px; }
+
+    /* ── Star rating ── */
+    .stars { color: #f59e0b; letter-spacing: 2px; font-size: 0.9rem; }
+
+    /* ── Service card hover ── */
+    .service-card {
+      transition: box-shadow 0.22s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.22s cubic-bezier(0.22,1,0.36,1);
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px -4px rgba(45,112,24,0.16), 0 2px 8px 0 rgba(45,112,24,0.10);
+    }
+
+    /* ── Stat card ── */
+    .stat-divider { border-left: 1px solid rgba(255,255,255,0.15); }
+
+    /* ── Hero gradient overlay ── */
+    .hero-overlay {
+      background: linear-gradient(135deg, rgba(22,53,16,0.82) 0%, rgba(29,70,16,0.65) 60%, rgba(29,70,16,0.3) 100%);
+    }
+
+    /* ── Section fade-in on scroll ── */
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1); }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Mobile menu ── */
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: block; }
+
+    /* ── Grain texture overlay ── */
+    .grain::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.06;
+    }
+
+    /* ── Quote form card (adapted from contact-card component) ── */
+    .quote-form input,
+    .quote-form select,
+    .quote-form textarea {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+      font-family: 'Inter', sans-serif;
+      color: #111827;
+      background: #fff;
+      transition: border-color 0.18s, box-shadow 0.18s;
+      outline: none;
+    }
+    .quote-form input:focus,
+    .quote-form select:focus { border-color: #3d8f1f; box-shadow: 0 0 0 3px rgba(61,143,31,0.12); }
+    .quote-form label { display: block; font-size: 0.75rem; font-weight: 600; color: #374151; margin-bottom: 0.25rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  </style>
+</head>
+<body class="bg-white text-gray-800 font-body">
+
+  <!-- ════════════════════════════════════════════
+       1. NAVBAR  (adapted from navbar-1 / glow-menu)
+       ════════════════════════════════════════════ -->
+  <header class="w-full bg-white border-b border-gray-100 sticky top-0 z-50" style="box-shadow:0 1px 16px 0 rgba(45,112,24,0.07)">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-2.5 group" style="text-decoration:none">
+        <span class="w-8 h-8 rounded-full flex items-center justify-center" style="background:linear-gradient(135deg,#3d8f1f 0%,#5ab133 100%); box-shadow:0 2px 8px rgba(61,143,31,0.3)">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 17c2-5 6-9 14-9-2 5-6 9-14 9z" fill="#fff" opacity="0.9"/>
+            <path d="M10 17c0-4-2-8-7-10 1 5 3 9 7 10z" fill="#fff"/>
+          </svg>
+        </span>
+        <span class="font-display font-700 text-xl tracking-tight" style="color:#163510; letter-spacing:-0.02em">REGENT</span>
+      </a>
+
+      <!-- Desktop nav -->
+      <nav class="hidden md:flex items-center gap-1">
+        <a href="#" class="nav-link">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#reviews" class="nav-link">Reviews</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <!-- Desktop CTA -->
+      <a href="#contact" class="hidden md:inline-flex btn-primary">Get a Free Quote</a>
+
+      <!-- Mobile hamburger -->
+      <button id="hamburger" aria-label="Open menu" class="md:hidden flex items-center justify-center w-9 h-9 rounded-lg text-gray-700 hover:bg-regent-100 transition-colors"
+        onclick="document.getElementById('mobile-menu').classList.toggle('open')">
+        <svg id="icon-open" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden border-t border-gray-100 bg-white">
+      <nav class="flex flex-col px-4 py-4 gap-1">
+        <a href="#" class="nav-link" onclick="document.getElementById('mobile-menu').classList.remove('open')">Home</a>
+        <a href="#about" class="nav-link" onclick="document.getElementById('mobile-menu').classList.remove('open')">About</a>
+        <a href="#services" class="nav-link" onclick="document.getElementById('mobile-menu').classList.remove('open')">Services</a>
+        <a href="#reviews" class="nav-link" onclick="document.getElementById('mobile-menu').classList.remove('open')">Reviews</a>
+        <a href="#contact" class="nav-link" onclick="document.getElementById('mobile-menu').classList.remove('open')">Contact</a>
+        <div class="pt-2">
+          <a href="#contact" class="btn-primary w-full text-center">Get a Free Quote</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════════
+       2. HERO
+       ════════════════════════════════════════════ -->
+  <section class="relative min-h-[88vh] flex items-center grain overflow-hidden" style="background-color:#163510">
+    <!-- Background image -->
+    <img src="https://placehold.co/1600x900/1d4610/1d4610" alt="" aria-hidden="true"
+         class="absolute inset-0 w-full h-full object-cover"
+         style="mix-blend-mode:multiply; opacity:0.5" />
+    <div class="hero-overlay absolute inset-0"></div>
+
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 w-full py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+      <!-- Left: headline + mini services -->
+      <div>
+        <p class="text-regent-300 text-sm font-semibold uppercase tracking-widest mb-4">Regent Lawn Mowing &amp; Cleaning</p>
+        <h1 class="font-display font-800 text-white leading-none mb-6"
+            style="font-size:clamp(2.4rem,6vw,4.2rem); letter-spacing:-0.03em; line-height:1.08">
+          Best Lawn Ever,<br/><em>Guaranteed.</em>
+        </h1>
+        <p class="text-white/70 text-base leading-relaxed max-w-md mb-8" style="line-height:1.7">
+          Professional lawn care, mowing, and cleaning services delivered with precision, pride, and a satisfaction guarantee on every job.
+        </p>
+
+        <div class="flex flex-wrap gap-3 mb-10">
+          <a href="#contact" class="btn-primary">Get a Free Quote</a>
+          <a href="#services" class="btn-outline" style="border-color:rgba(255,255,255,0.5);color:#fff">
+            Our Services
+          </a>
+        </div>
+
+        <!-- Mini service icons -->
+        <div class="flex flex-wrap gap-6">
+          <!-- Lawn -->
+          <div class="flex items-center gap-2">
+            <span class="w-9 h-9 rounded-full flex items-center justify-center bg-white/10 backdrop-blur-sm">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#84cb57" stroke-width="1.8" stroke-linecap="round"><path d="M2 20c3-6 8-10 20-10M6 20c1-4 3-7 8-8"/></svg>
+            </span>
+            <span class="text-white/80 text-sm font-medium">Lawn</span>
+          </div>
+          <!-- Landscaping -->
+          <div class="flex items-center gap-2">
+            <span class="w-9 h-9 rounded-full flex items-center justify-center bg-white/10 backdrop-blur-sm">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#84cb57" stroke-width="1.8" stroke-linecap="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 8v8M8 12h8"/></svg>
+            </span>
+            <span class="text-white/80 text-sm font-medium">Landscaping</span>
+          </div>
+          <!-- Sprinklers -->
+          <div class="flex items-center gap-2">
+            <span class="w-9 h-9 rounded-full flex items-center justify-center bg-white/10 backdrop-blur-sm">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#84cb57" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 9V3M15 10.27l5.2-3M13.73 15l3 5.2M10.27 15l-5.2 3M8 12H2M10.27 9l-3-5.2"/></svg>
+            </span>
+            <span class="text-white/80 text-sm font-medium">Sprinklers</span>
+          </div>
+          <!-- Tree Trimming -->
+          <div class="flex items-center gap-2">
+            <span class="w-9 h-9 rounded-full flex items-center justify-center bg-white/10 backdrop-blur-sm">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#84cb57" stroke-width="1.8" stroke-linecap="round"><path d="M12 2L8 10h3l-2 12h6l-2-12h3L12 2z"/></svg>
+            </span>
+            <span class="text-white/80 text-sm font-medium">Tree Trimming</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Request a Quote form (adapted from contact-card component) -->
+      <div id="contact" class="bg-white rounded-2xl p-7 shadow-2xl" style="box-shadow:0 24px 64px -12px rgba(0,0,0,0.4)">
+        <h2 class="font-display font-700 text-gray-900 text-xl mb-1" style="letter-spacing:-0.01em">Request a Quote</h2>
+        <p class="text-gray-500 text-sm mb-5">Fill out the form and we'll get back to you within 1 business day.</p>
+
+        <form class="quote-form space-y-4" onsubmit="return false">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label>First Name</label>
+              <input type="text" placeholder="John" />
+            </div>
+            <div>
+              <label>Last Name</label>
+              <input type="text" placeholder="Smith" />
+            </div>
+          </div>
+          <div>
+            <label>Phone Number</label>
+            <input type="tel" placeholder="(555) 000-0000" />
+          </div>
+          <div>
+            <label>Email Address</label>
+            <input type="email" placeholder="john@example.com" />
+          </div>
+          <div>
+            <label>Zip Code</label>
+            <input type="text" placeholder="90210" />
+          </div>
+          <div>
+            <label>Service Needed</label>
+            <select>
+              <option value="">Select a service…</option>
+              <option>Lawn Mowing</option>
+              <option>Landscaping</option>
+              <option>Sprinkler Systems</option>
+              <option>Tree Trimming</option>
+              <option>General Cleaning</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-primary w-full mt-2" style="padding:0.75rem 1.5rem;border-radius:0.75rem;font-size:0.9375rem">
+            Get a Free Quote
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       3. OUR SERVICES
+       ════════════════════════════════════════════ -->
+  <section id="services" class="py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-14 fade-in">
+        <p class="text-regent-600 text-sm font-semibold uppercase tracking-widest mb-3">What We Do</p>
+        <h2 class="font-display font-700 text-gray-900" style="font-size:clamp(1.8rem,4vw,2.8rem); letter-spacing:-0.03em">Our Services</h2>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- Lawn -->
+        <div class="service-card bg-white rounded-2xl p-7 border border-gray-100 text-center fade-in"
+             style="box-shadow:0 2px 12px 0 rgba(45,112,24,0.07)">
+          <div class="w-14 h-14 rounded-xl bg-regent-50 flex items-center justify-center mx-auto mb-5">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2d7018" stroke-width="1.8" stroke-linecap="round">
+              <path d="M2 20c3-6 8-10 20-10"/><path d="M6 20c1-4 3-7 8-8"/>
+            </svg>
+          </div>
+          <h3 class="font-display font-600 text-gray-900 text-lg mb-2">Lawn</h3>
+          <p class="text-gray-500 text-sm leading-relaxed mb-4" style="line-height:1.7">Expert mowing, edging, and blowing for a perfectly manicured lawn every visit.</p>
+          <a href="#contact" class="text-regent-600 text-sm font-semibold hover:text-regent-800 transition-colors" style="text-decoration:none">
+            Learn More &rarr;
+          </a>
+        </div>
+
+        <!-- Landscaping -->
+        <div class="service-card bg-white rounded-2xl p-7 border border-gray-100 text-center fade-in"
+             style="box-shadow:0 2px 12px 0 rgba(45,112,24,0.07)">
+          <div class="w-14 h-14 rounded-xl bg-regent-50 flex items-center justify-center mx-auto mb-5">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2d7018" stroke-width="1.8" stroke-linecap="round">
+              <path d="M12 22V12"/><path d="M5 12h14"/><path d="M6 8c2-2 5-3 6-3s4 1 6 3"/><path d="M4 16c1-3 4-5 8-5s7 2 8 5"/>
+            </svg>
+          </div>
+          <h3 class="font-display font-600 text-gray-900 text-lg mb-2">Landscaping</h3>
+          <p class="text-gray-500 text-sm leading-relaxed mb-4" style="line-height:1.7">Design and installation of beautiful, low-maintenance landscape features.</p>
+          <a href="#contact" class="text-regent-600 text-sm font-semibold hover:text-regent-800 transition-colors" style="text-decoration:none">
+            Learn More &rarr;
+          </a>
+        </div>
+
+        <!-- Sprinklers -->
+        <div class="service-card bg-white rounded-2xl p-7 border border-gray-100 text-center fade-in"
+             style="box-shadow:0 2px 12px 0 rgba(45,112,24,0.07)">
+          <div class="w-14 h-14 rounded-xl bg-regent-50 flex items-center justify-center mx-auto mb-5">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2d7018" stroke-width="1.8" stroke-linecap="round">
+              <circle cx="12" cy="12" r="3"/><path d="M12 9V3"/><path d="M14.6 10.4l4.9-2.8"/><path d="M14.6 13.6l2.8 4.9"/><path d="M12 15v6"/><path d="M9.4 13.6l-4.9 2.8"/><path d="M9.4 10.4L6.6 5.5"/>
+            </svg>
+          </div>
+          <h3 class="font-display font-600 text-gray-900 text-lg mb-2">Sprinklers</h3>
+          <p class="text-gray-500 text-sm leading-relaxed mb-4" style="line-height:1.7">Installation, repair, and seasonal adjustment of irrigation systems.</p>
+          <a href="#contact" class="text-regent-600 text-sm font-semibold hover:text-regent-800 transition-colors" style="text-decoration:none">
+            Learn More &rarr;
+          </a>
+        </div>
+
+        <!-- Tree Trimming -->
+        <div class="service-card bg-white rounded-2xl p-7 border border-gray-100 text-center fade-in"
+             style="box-shadow:0 2px 12px 0 rgba(45,112,24,0.07)">
+          <div class="w-14 h-14 rounded-xl bg-regent-50 flex items-center justify-center mx-auto mb-5">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2d7018" stroke-width="1.8" stroke-linecap="round">
+              <path d="M17 14c0-4.42-3.58-8-8-8"/><path d="M9 6a8 8 0 0 1 8 8"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2"/><path d="M10 22v-6l2-2 2 2v6"/>
+            </svg>
+          </div>
+          <h3 class="font-display font-600 text-gray-900 text-lg mb-2">Tree Trimming</h3>
+          <p class="text-gray-500 text-sm leading-relaxed mb-4" style="line-height:1.7">Safe, professional trimming and removal to keep your trees healthy and beautiful.</p>
+          <a href="#contact" class="text-regent-600 text-sm font-semibold hover:text-regent-800 transition-colors" style="text-decoration:none">
+            Learn More &rarr;
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       4. BEST GUARANTEE
+       ════════════════════════════════════════════ -->
+  <section class="py-20 bg-regent-50" id="about">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+        <!-- Left -->
+        <div class="fade-in">
+          <p class="text-regent-600 text-sm font-semibold uppercase tracking-widest mb-4">Why Choose Regent</p>
+          <h2 class="font-display font-700 text-gray-900 mb-6" style="font-size:clamp(1.7rem,3.5vw,2.6rem); letter-spacing:-0.03em; line-height:1.15">
+            We Offer the Best Guarantee in the Business
+          </h2>
+          <p class="text-gray-600 leading-relaxed mb-8" style="line-height:1.7">
+            Your satisfaction is our top priority. If you're not 100% happy with our work, we'll come back and make it right — no questions asked.
+          </p>
+          <a href="#contact" class="btn-primary">Request a Free Quote</a>
+        </div>
+
+        <!-- Right: 3 guarantee items -->
+        <div class="space-y-6 fade-in">
+
+          <div class="flex items-start gap-5 bg-white rounded-2xl p-6" style="box-shadow:0 2px 12px 0 rgba(45,112,24,0.07)">
+            <div class="w-12 h-12 rounded-xl bg-regent-100 flex items-center justify-center flex-shrink-0">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d7018" stroke-width="1.8" stroke-linecap="round">
+                <path d="M9 12l2 2 4-4"/><path d="M12 2l3 3h4v4l3 3-3 3v4h-4l-3 3-3-3H5v-4L2 12l3-3V5h4l3-3z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-900 mb-1">On-site Quote</h3>
+              <p class="text-gray-500 text-sm leading-relaxed" style="line-height:1.7">We come to you — free, no-obligation quotes assessed right at your property.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-5 bg-white rounded-2xl p-6" style="box-shadow:0 2px 12px 0 rgba(45,112,24,0.07)">
+            <div class="w-12 h-12 rounded-xl bg-regent-100 flex items-center justify-center flex-shrink-0">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d7018" stroke-width="1.8" stroke-linecap="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-900 mb-1">We Guarantee</h3>
+              <p class="text-gray-500 text-sm leading-relaxed" style="line-height:1.7">100% satisfaction guarantee on every job. Not happy? We'll return and fix it free of charge.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-5 bg-white rounded-2xl p-6" style="box-shadow:0 2px 12px 0 rgba(45,112,24,0.07)">
+            <div class="w-12 h-12 rounded-xl bg-regent-100 flex items-center justify-center flex-shrink-0">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d7018" stroke-width="1.8" stroke-linecap="round">
+                <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-900 mb-1">Transparent Pricing</h3>
+              <p class="text-gray-500 text-sm leading-relaxed" style="line-height:1.7">No hidden fees, no surprises. The price we quote is the price you pay.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       5. TRANSFORM YOUR OUTDOOR SPACE
+       ════════════════════════════════════════════ -->
+  <section class="py-20 bg-white overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+
+        <!-- Left: text -->
+        <div class="fade-in">
+          <p class="text-regent-600 text-sm font-semibold uppercase tracking-widest mb-4">Premium Results</p>
+          <h2 class="font-display font-700 text-gray-900 mb-6" style="font-size:clamp(1.8rem,4vw,3rem); letter-spacing:-0.03em; line-height:1.1">
+            Transform Your<br/>Outdoor Space
+          </h2>
+          <p class="text-gray-500 leading-relaxed mb-6" style="line-height:1.7">
+            From overgrown and neglected to neat, healthy, and eye-catching — we bring the expertise and equipment to make your property the pride of the neighbourhood.
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-3 text-gray-700 text-sm">
+              <span class="w-5 h-5 rounded-full bg-regent-100 flex items-center justify-center flex-shrink-0">
+                <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#2d7018" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              Licensed &amp; insured professionals
+            </li>
+            <li class="flex items-center gap-3 text-gray-700 text-sm">
+              <span class="w-5 h-5 rounded-full bg-regent-100 flex items-center justify-center flex-shrink-0">
+                <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#2d7018" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              Commercial-grade equipment
+            </li>
+            <li class="flex items-center gap-3 text-gray-700 text-sm">
+              <span class="w-5 h-5 rounded-full bg-regent-100 flex items-center justify-center flex-shrink-0">
+                <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#2d7018" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              Eco-friendly practices available
+            </li>
+            <li class="flex items-center gap-3 text-gray-700 text-sm">
+              <span class="w-5 h-5 rounded-full bg-regent-100 flex items-center justify-center flex-shrink-0">
+                <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#2d7018" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              Flexible scheduling to suit you
+            </li>
+          </ul>
+          <a href="#contact" class="btn-primary">Get Started Today</a>
+        </div>
+
+        <!-- Right: image -->
+        <div class="relative fade-in">
+          <div class="rounded-2xl overflow-hidden" style="box-shadow:0 24px 48px -8px rgba(22,53,16,0.18)">
+            <div class="relative">
+              <img src="https://placehold.co/680x500/1d4610/3d8f1f?text=Hedge+Trimming" alt="Hedge trimming service" class="w-full h-auto object-cover" style="min-height:340px" />
+              <div class="absolute inset-0" style="background:linear-gradient(to top, rgba(22,53,16,0.5) 0%, transparent 60%)"></div>
+            </div>
+          </div>
+          <!-- Floating badge -->
+          <div class="absolute -bottom-4 -left-4 bg-white rounded-2xl px-5 py-4 flex items-center gap-3" style="box-shadow:0 8px 24px 0 rgba(22,53,16,0.16)">
+            <div class="w-10 h-10 rounded-xl bg-regent-600 flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+            </div>
+            <div>
+              <p class="text-xs text-gray-400 leading-none mb-0.5">Satisfaction</p>
+              <p class="font-semibold text-gray-900 text-sm">Guaranteed</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       6. WHEN WE WORK, WE WORK HARD
+       ════════════════════════════════════════════ -->
+  <section class="py-20 bg-regent-50 overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+
+        <!-- Left: image (image-auto-slider adapted to single feature image) -->
+        <div class="relative fade-in order-2 lg:order-1">
+          <div class="rounded-2xl overflow-hidden" style="box-shadow:0 24px 48px -8px rgba(22,53,16,0.18)">
+            <img src="https://placehold.co/680x500/163510/5ab133?text=Professional+Equipment" alt="Professional lawn equipment" class="w-full h-auto object-cover" style="min-height:340px" />
+            <div class="absolute inset-0 rounded-2xl" style="background:linear-gradient(to top, rgba(22,53,16,0.4) 0%, transparent 50%); pointer-events:none"></div>
+          </div>
+          <!-- Floating stat -->
+          <div class="absolute -top-4 -right-4 bg-regent-700 rounded-2xl px-5 py-4 text-white" style="box-shadow:0 8px 24px 0 rgba(22,53,16,0.25)">
+            <p class="text-regent-200 text-xs font-semibold uppercase tracking-wider mb-0.5">Experience</p>
+            <p class="font-display font-800 text-2xl leading-none">8+ Years</p>
+          </div>
+        </div>
+
+        <!-- Right: text -->
+        <div class="fade-in order-1 lg:order-2">
+          <p class="text-regent-600 text-sm font-semibold uppercase tracking-widest mb-4">Our Work Ethic</p>
+          <h2 class="font-display font-700 text-gray-900 mb-6" style="font-size:clamp(1.8rem,3.5vw,2.8rem); letter-spacing:-0.03em; line-height:1.1">
+            When we work for you,<br/>we work <em>Hard.</em>
+          </h2>
+          <p class="text-gray-500 leading-relaxed mb-8" style="line-height:1.7">
+            We treat every property as if it were our own. Our crew shows up on time, works diligently, and doesn't leave until the job is done right.
+          </p>
+          <ul class="space-y-4">
+            <li class="flex items-start gap-4">
+              <span class="w-6 h-6 rounded-full bg-regent-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div>
+                <p class="font-semibold text-gray-800 text-sm">Punctual &amp; Reliable</p>
+                <p class="text-gray-500 text-sm leading-relaxed" style="line-height:1.6">We respect your time. Our team arrives within the scheduled window, every time.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-4">
+              <span class="w-6 h-6 rounded-full bg-regent-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div>
+                <p class="font-semibold text-gray-800 text-sm">Detail-Oriented</p>
+                <p class="text-gray-500 text-sm leading-relaxed" style="line-height:1.6">We notice the edges, the corners, the spots others miss. Quality is in the details.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-4">
+              <span class="w-6 h-6 rounded-full bg-regent-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div>
+                <p class="font-semibold text-gray-800 text-sm">Fully Insured</p>
+                <p class="text-gray-500 text-sm leading-relaxed" style="line-height:1.6">Work with confidence. Our team is fully licensed, bonded, and insured for your protection.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-4">
+              <span class="w-6 h-6 rounded-full bg-regent-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div>
+                <p class="font-semibold text-gray-800 text-sm">Clean-Up Included</p>
+                <p class="text-gray-500 text-sm leading-relaxed" style="line-height:1.6">We leave your property cleaner than we found it — no clippings left behind.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       7. IMAGE AUTO-SLIDER  (adapted from component 7)
+       ════════════════════════════════════════════ -->
+  <section class="py-14 bg-white overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 mb-8 text-center fade-in">
+      <p class="text-regent-600 text-sm font-semibold uppercase tracking-widest mb-3">Our Work</p>
+      <h2 class="font-display font-700 text-gray-900" style="font-size:clamp(1.5rem,3vw,2.2rem); letter-spacing:-0.03em">Results We're Proud Of</h2>
+    </div>
+    <div class="img-slider-wrap w-full py-2">
+      <div class="img-slider-track">
+        <!-- Set A -->
+        <div class="flex-shrink-0 w-56 h-40 md:w-72 md:h-52 rounded-xl overflow-hidden" style="box-shadow:0 4px 16px rgba(22,53,16,0.12)">
+          <img src="https://placehold.co/288x208/163510/5ab133?text=Lawn+1" alt="Lawn result" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <div class="flex-shrink-0 w-56 h-40 md:w-72 md:h-52 rounded-xl overflow-hidden" style="box-shadow:0 4px 16px rgba(22,53,16,0.12)">
+          <img src="https://placehold.co/288x208/2d7018/84cb57?text=Garden+2" alt="Garden result" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <div class="flex-shrink-0 w-56 h-40 md:w-72 md:h-52 rounded-xl overflow-hidden" style="box-shadow:0 4px 16px rgba(22,53,16,0.12)">
+          <img src="https://placehold.co/288x208/1d4610/4a9e2f?text=Hedge+3" alt="Hedge result" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <div class="flex-shrink-0 w-56 h-40 md:w-72 md:h-52 rounded-xl overflow-hidden" style="box-shadow:0 4px 16px rgba(22,53,16,0.12)">
+          <img src="https://placehold.co/288x208/245912/b4e193?text=Trees+4" alt="Tree result" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <div class="flex-shrink-0 w-56 h-40 md:w-72 md:h-52 rounded-xl overflow-hidden" style="box-shadow:0 4px 16px rgba(22,53,16,0.12)">
+          <img src="https://placehold.co/288x208/163510/d9f0c8?text=Sprinkler+5" alt="Sprinkler result" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <div class="flex-shrink-0 w-56 h-40 md:w-72 md:h-52 rounded-xl overflow-hidden" style="box-shadow:0 4px 16px rgba(22,53,16,0.12)">
+          <img src="https://placehold.co/288x208/2d7018/f0f9eb?text=Mowing+6" alt="Mowing result" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <!-- Set B (duplicated for seamless loop) -->
+        <div class="flex-shrink-0 w-56 h-40 md:w-72 md:h-52 rounded-xl overflow-hidden" style="box-shadow:0 4px 16px rgba(22,53,16,0.12)">
+          <img src="https://placehold.co/288x208/163510/5ab133?text=Lawn+1" alt="Lawn result" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <div class="flex-shrink-0 w-56 h-40 md:w-72 md:h-52 rounded-xl overflow-hidden" style="box-shadow:0 4px 16px rgba(22,53,16,0.12)">
+          <img src="https://placehold.co/288x208/2d7018/84cb57?text=Garden+2" alt="Garden result" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <div class="flex-shrink-0 w-56 h-40 md:w-72 md:h-52 rounded-xl overflow-hidden" style="box-shadow:0 4px 16px rgba(22,53,16,0.12)">
+          <img src="https://placehold.co/288x208/1d4610/4a9e2f?text=Hedge+3" alt="Hedge result" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <div class="flex-shrink-0 w-56 h-40 md:w-72 md:h-52 rounded-xl overflow-hidden" style="box-shadow:0 4px 16px rgba(22,53,16,0.12)">
+          <img src="https://placehold.co/288x208/245912/b4e193?text=Trees+4" alt="Tree result" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <div class="flex-shrink-0 w-56 h-40 md:w-72 md:h-52 rounded-xl overflow-hidden" style="box-shadow:0 4px 16px rgba(22,53,16,0.12)">
+          <img src="https://placehold.co/288x208/163510/d9f0c8?text=Sprinkler+5" alt="Sprinkler result" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <div class="flex-shrink-0 w-56 h-40 md:w-72 md:h-52 rounded-xl overflow-hidden" style="box-shadow:0 4px 16px rgba(22,53,16,0.12)">
+          <img src="https://placehold.co/288x208/2d7018/f0f9eb?text=Mowing+6" alt="Mowing result" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       8. STATS — THE NUMBERS NEVER LIE
+       ════════════════════════════════════════════ -->
+  <section class="py-20 relative grain overflow-hidden" style="background:#163510">
+    <div class="absolute inset-0" style="background:radial-gradient(ellipse 80% 60% at 50% 50%, rgba(61,143,31,0.18) 0%, transparent 70%)"></div>
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 text-center">
+      <p class="text-regent-300 text-sm font-semibold uppercase tracking-widest mb-3">By The Numbers</p>
+      <h2 class="font-display font-700 text-white mb-14" style="font-size:clamp(1.6rem,3.5vw,2.5rem); letter-spacing:-0.03em">The Numbers Never Lie.</h2>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-0 divide-x divide-white/15">
+
+        <div class="px-8 py-6 fade-in">
+          <p class="font-display font-800 text-white mb-1" style="font-size:clamp(2.4rem,5vw,3.5rem); letter-spacing:-0.03em; line-height:1">4.8<span class="text-regent-400">+</span></p>
+          <p class="text-regent-300 text-sm font-medium uppercase tracking-wider">Star Rating</p>
+        </div>
+
+        <div class="px-8 py-6 fade-in">
+          <p class="font-display font-800 text-white mb-1" style="font-size:clamp(2.4rem,5vw,3.5rem); letter-spacing:-0.03em; line-height:1">4.9<span class="text-regent-400"></span></p>
+          <p class="text-regent-300 text-sm font-medium uppercase tracking-wider">Avg. Review</p>
+        </div>
+
+        <div class="px-8 py-6 fade-in">
+          <p class="font-display font-800 text-white mb-1" style="font-size:clamp(2.4rem,5vw,3.5rem); letter-spacing:-0.03em; line-height:1">500<span class="text-regent-400">+</span></p>
+          <p class="text-regent-300 text-sm font-medium uppercase tracking-wider">Projects Done</p>
+        </div>
+
+        <div class="px-8 py-6 fade-in">
+          <p class="font-display font-800 text-white mb-1" style="font-size:clamp(2.4rem,5vw,3.5rem); letter-spacing:-0.03em; line-height:1">8<span class="text-regent-400">+</span></p>
+          <p class="text-regent-300 text-sm font-medium uppercase tracking-wider">Years Experience</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       9. CUT CORNERS CALLOUT
+       ════════════════════════════════════════════ -->
+  <section class="py-24 bg-white text-center fade-in">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <p class="text-regent-600 text-sm font-semibold uppercase tracking-widest mb-5">Our Promise</p>
+      <h2 class="font-display font-700 text-gray-900 mb-6" style="font-size:clamp(2rem,5vw,3.5rem); letter-spacing:-0.03em; line-height:1.08">
+        The only thing<br/>we don't cut are <em style="color:#2d7018">Corners.</em>
+      </h2>
+      <p class="text-gray-500 text-lg leading-relaxed mb-10" style="line-height:1.7">
+        Exceptional lawn care isn't just about cutting grass — it's about respect for your property, your time, and your investment. We deliver that, every single visit.
+      </p>
+      <a href="#contact" class="btn-primary" style="padding:0.875rem 2.5rem;font-size:1rem">Get Your Free Quote</a>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       10. REVIEWS  (adapted from testimonials-columns component 2)
+       ════════════════════════════════════════════ -->
+  <section id="reviews" class="py-20 bg-regent-50 overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-14 fade-in">
+        <p class="text-regent-600 text-sm font-semibold uppercase tracking-widest mb-3">Client Feedback</p>
+        <h2 class="font-display font-700 text-gray-900 mb-4" style="font-size:clamp(1.8rem,4vw,2.8rem); letter-spacing:-0.03em">What Our Clients Say</h2>
+        <p class="text-gray-500 max-w-md mx-auto" style="line-height:1.7">Real reviews from real customers who trust Regent for their lawns.</p>
+      </div>
+
+      <!-- Scrolling columns (adapted from testimonials-columns-1) -->
+      <div class="flex gap-6 [mask-image:linear-gradient(to_bottom,transparent,black_12%,black_88%,transparent)] max-h-[640px]">
+
+        <!-- Column 1 -->
+        <div class="scroll-col flex-1">
+          <div class="scroll-inner scroll-inner--fast">
+            <!-- reviews duplicated for loop -->
+            <div class="bg-white rounded-2xl p-6 border border-gray-100" style="box-shadow:0 2px 12px rgba(45,112,24,0.07)">
+              <div class="stars mb-3">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="text-gray-700 text-sm leading-relaxed mb-4" style="line-height:1.7">"Regent transformed our front yard completely. The team was professional, thorough, and left everything spotless. Best service we've had."</p>
+              <div class="flex items-center gap-3">
+                <img src="https://placehold.co/40x40/d9f0c8/2d7018?text=JM" alt="Janet M." class="w-10 h-10 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-gray-900 text-sm">Janet M.</p>
+                  <p class="text-gray-400 text-xs">Homeowner</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-100" style="box-shadow:0 2px 12px rgba(45,112,24,0.07)">
+              <div class="stars mb-3">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="text-gray-700 text-sm leading-relaxed mb-4" style="line-height:1.7">"Always on time, always reliable. The lawn has never looked better. I've recommended Regent to every neighbor on my street."</p>
+              <div class="flex items-center gap-3">
+                <img src="https://placehold.co/40x40/b4e181/163510?text=TC" alt="Tom C." class="w-10 h-10 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-gray-900 text-sm">Tom C.</p>
+                  <p class="text-gray-400 text-xs">Property Manager</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-100" style="box-shadow:0 2px 12px rgba(45,112,24,0.07)">
+              <div class="stars mb-3">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="text-gray-700 text-sm leading-relaxed mb-4" style="line-height:1.7">"The quote was fair, the work was exceptional, and they cleaned up everything afterward. Truly five-star service."</p>
+              <div class="flex items-center gap-3">
+                <img src="https://placehold.co/40x40/f0f9eb/245912?text=SR" alt="Sarah R." class="w-10 h-10 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-gray-900 text-sm">Sarah R.</p>
+                  <p class="text-gray-400 text-xs">Homeowner</p>
+                </div>
+              </div>
+            </div>
+            <!-- Duplicate for seamless loop -->
+            <div class="bg-white rounded-2xl p-6 border border-gray-100" style="box-shadow:0 2px 12px rgba(45,112,24,0.07)">
+              <div class="stars mb-3">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="text-gray-700 text-sm leading-relaxed mb-4" style="line-height:1.7">"Regent transformed our front yard completely. The team was professional, thorough, and left everything spotless. Best service we've had."</p>
+              <div class="flex items-center gap-3">
+                <img src="https://placehold.co/40x40/d9f0c8/2d7018?text=JM" alt="Janet M." class="w-10 h-10 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-gray-900 text-sm">Janet M.</p>
+                  <p class="text-gray-400 text-xs">Homeowner</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-100" style="box-shadow:0 2px 12px rgba(45,112,24,0.07)">
+              <div class="stars mb-3">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="text-gray-700 text-sm leading-relaxed mb-4" style="line-height:1.7">"Always on time, always reliable. The lawn has never looked better. I've recommended Regent to every neighbor on my street."</p>
+              <div class="flex items-center gap-3">
+                <img src="https://placehold.co/40x40/b4e181/163510?text=TC" alt="Tom C." class="w-10 h-10 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-gray-900 text-sm">Tom C.</p>
+                  <p class="text-gray-400 text-xs">Property Manager</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-100" style="box-shadow:0 2px 12px rgba(45,112,24,0.07)">
+              <div class="stars mb-3">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="text-gray-700 text-sm leading-relaxed mb-4" style="line-height:1.7">"The quote was fair, the work was exceptional, and they cleaned up everything afterward. Truly five-star service."</p>
+              <div class="flex items-center gap-3">
+                <img src="https://placehold.co/40x40/f0f9eb/245912?text=SR" alt="Sarah R." class="w-10 h-10 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-gray-900 text-sm">Sarah R.</p>
+                  <p class="text-gray-400 text-xs">Homeowner</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2 (hidden on mobile) -->
+        <div class="scroll-col flex-1 hidden md:block">
+          <div class="scroll-inner scroll-inner--mid">
+            <div class="bg-white rounded-2xl p-6 border border-gray-100" style="box-shadow:0 2px 12px rgba(45,112,24,0.07)">
+              <div class="stars mb-3">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="text-gray-700 text-sm leading-relaxed mb-4" style="line-height:1.7">"I've tried three other lawn services and none of them come close to Regent. They're in a league of their own when it comes to attention to detail."</p>
+              <div class="flex items-center gap-3">
+                <img src="https://placehold.co/40x40/d9f0c8/163510?text=MK" alt="Mike K." class="w-10 h-10 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-gray-900 text-sm">Mike K.</p>
+                  <p class="text-gray-400 text-xs">Landlord</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-100" style="box-shadow:0 2px 12px rgba(45,112,24,0.07)">
+              <div class="stars mb-3">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="text-gray-700 text-sm leading-relaxed mb-4" style="line-height:1.7">"Our property looked immaculate for our open house. The hedges, lawn, and gardens were all perfectly manicured. We sold in one weekend!"</p>
+              <div class="flex items-center gap-3">
+                <img src="https://placehold.co/40x40/b4e181/2d7018?text=AL" alt="Amy L." class="w-10 h-10 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-gray-900 text-sm">Amy L.</p>
+                  <p class="text-gray-400 text-xs">Home Seller</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-100" style="box-shadow:0 2px 12px rgba(45,112,24,0.07)">
+              <div class="stars mb-3">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+              <p class="text-gray-700 text-sm leading-relaxed mb-4" style="line-height:1.7">"Great communication before, during, and after the job. They checked in to make sure we were happy — and we absolutely were."</p>
+              <div class="flex items-center gap-3">
+                <img src="https://placehold.co/40x40/f0f9eb/3d8f1f?text=DP" alt="David P." class="w-10 h-10 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-gray-900 text-sm">David P.</p>
+                  <p class="text-gray-400 text-xs">Homeowner</p>
+                </div>
+              </div>
+            </div>
+            <!-- Duplicated -->
+            <div class="bg-white rounded-2xl p-6 border border-gray-100" style="box-shadow:0 2px 12px rgba(45,112,24,0.07)">
+              <div class="stars mb-3">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="text-gray-700 text-sm leading-relaxed mb-4" style="line-height:1.7">"I've tried three other lawn services and none of them come close to Regent. They're in a league of their own when it comes to attention to detail."</p>
+              <div class="flex items-center gap-3">
+                <img src="https://placehold.co/40x40/d9f0c8/163510?text=MK" alt="Mike K." class="w-10 h-10 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-gray-900 text-sm">Mike K.</p>
+                  <p class="text-gray-400 text-xs">Landlord</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-100" style="box-shadow:0 2px 12px rgba(45,112,24,0.07)">
+              <div class="stars mb-3">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="text-gray-700 text-sm leading-relaxed mb-4" style="line-height:1.7">"Our property looked immaculate for our open house. The hedges, lawn, and gardens were all perfectly manicured. We sold in one weekend!"</p>
+              <div class="flex items-center gap-3">
+                <img src="https://placehold.co/40x40/b4e181/2d7018?text=AL" alt="Amy L." class="w-10 h-10 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-gray-900 text-sm">Amy L.</p>
+                  <p class="text-gray-400 text-xs">Home Seller</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-100" style="box-shadow:0 2px 12px rgba(45,112,24,0.07)">
+              <div class="stars mb-3">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+              <p class="text-gray-700 text-sm leading-relaxed mb-4" style="line-height:1.7">"Great communication before, during, and after the job. They checked in to make sure we were happy — and we absolutely were."</p>
+              <div class="flex items-center gap-3">
+                <img src="https://placehold.co/40x40/f0f9eb/3d8f1f?text=DP" alt="David P." class="w-10 h-10 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-gray-900 text-sm">David P.</p>
+                  <p class="text-gray-400 text-xs">Homeowner</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 3 (hidden on mobile & tablet) -->
+        <div class="scroll-col flex-1 hidden lg:block">
+          <div class="scroll-inner scroll-inner--slow">
+            <div class="bg-white rounded-2xl p-6 border border-gray-100" style="box-shadow:0 2px 12px rgba(45,112,24,0.07)">
+              <div class="stars mb-3">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="text-gray-700 text-sm leading-relaxed mb-4" style="line-height:1.7">"We use Regent for our commercial property. They keep our grounds looking professional year-round. Couldn't be happier with the consistency."</p>
+              <div class="flex items-center gap-3">
+                <img src="https://placehold.co/40x40/d9f0c8/1d4610?text=RB" alt="Rachel B." class="w-10 h-10 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-gray-900 text-sm">Rachel B.</p>
+                  <p class="text-gray-400 text-xs">Business Owner</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-100" style="box-shadow:0 2px 12px rgba(45,112,24,0.07)">
+              <div class="stars mb-3">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="text-gray-700 text-sm leading-relaxed mb-4" style="line-height:1.7">"Unbeatable price for the quality of work. They even noticed a sprinkler head that was damaged and fixed it without being asked."</p>
+              <div class="flex items-center gap-3">
+                <img src="https://placehold.co/40x40/b4e181/245912?text=GW" alt="Greg W." class="w-10 h-10 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-gray-900 text-sm">Greg W.</p>
+                  <p class="text-gray-400 text-xs">Homeowner</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-100" style="box-shadow:0 2px 12px rgba(45,112,24,0.07)">
+              <div class="stars mb-3">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="text-gray-700 text-sm leading-relaxed mb-4" style="line-height:1.7">"From the first phone call to the last sweep of the broom — outstanding. Regent cares about their work and it shows in every blade of grass."</p>
+              <div class="flex items-center gap-3">
+                <img src="https://placehold.co/40x40/f0f9eb/2d7018?text=LN" alt="Lisa N." class="w-10 h-10 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-gray-900 text-sm">Lisa N.</p>
+                  <p class="text-gray-400 text-xs">Homeowner</p>
+                </div>
+              </div>
+            </div>
+            <!-- Duplicated -->
+            <div class="bg-white rounded-2xl p-6 border border-gray-100" style="box-shadow:0 2px 12px rgba(45,112,24,0.07)">
+              <div class="stars mb-3">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="text-gray-700 text-sm leading-relaxed mb-4" style="line-height:1.7">"We use Regent for our commercial property. They keep our grounds looking professional year-round. Couldn't be happier with the consistency."</p>
+              <div class="flex items-center gap-3">
+                <img src="https://placehold.co/40x40/d9f0c8/1d4610?text=RB" alt="Rachel B." class="w-10 h-10 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-gray-900 text-sm">Rachel B.</p>
+                  <p class="text-gray-400 text-xs">Business Owner</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-100" style="box-shadow:0 2px 12px rgba(45,112,24,0.07)">
+              <div class="stars mb-3">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="text-gray-700 text-sm leading-relaxed mb-4" style="line-height:1.7">"Unbeatable price for the quality of work. They even noticed a sprinkler head that was damaged and fixed it without being asked."</p>
+              <div class="flex items-center gap-3">
+                <img src="https://placehold.co/40x40/b4e181/245912?text=GW" alt="Greg W." class="w-10 h-10 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-gray-900 text-sm">Greg W.</p>
+                  <p class="text-gray-400 text-xs">Homeowner</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-100" style="box-shadow:0 2px 12px rgba(45,112,24,0.07)">
+              <div class="stars mb-3">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="text-gray-700 text-sm leading-relaxed mb-4" style="line-height:1.7">"From the first phone call to the last sweep of the broom — outstanding. Regent cares about their work and it shows in every blade of grass."</p>
+              <div class="flex items-center gap-3">
+                <img src="https://placehold.co/40x40/f0f9eb/2d7018?text=LN" alt="Lisa N." class="w-10 h-10 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-gray-900 text-sm">Lisa N.</p>
+                  <p class="text-gray-400 text-xs">Homeowner</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       11. FOOTER CTA — READY FOR A PERFECT LAWN?
+       ════════════════════════════════════════════ -->
+  <section class="py-24 relative grain overflow-hidden" style="background:linear-gradient(135deg,#2d7018 0%,#163510 100%)">
+    <div class="absolute inset-0" style="background:radial-gradient(ellipse 70% 80% at 30% 50%, rgba(90,177,51,0.15) 0%, transparent 70%)"></div>
+    <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 text-center fade-in">
+      <p class="text-regent-300 text-sm font-semibold uppercase tracking-widest mb-5">Ready?</p>
+      <h2 class="font-display font-700 text-white mb-6" style="font-size:clamp(2rem,5vw,3.2rem); letter-spacing:-0.03em; line-height:1.1">
+        Ready for a Perfect Lawn?
+      </h2>
+      <p class="text-white/70 text-lg leading-relaxed mb-10" style="line-height:1.7">
+        Join hundreds of satisfied customers who trust Regent for a beautiful, healthy outdoor space. Your first quote is always free.
+      </p>
+      <a href="#contact" class="inline-flex btn-primary" style="background:#fff;color:#163510;font-size:1rem;padding:0.875rem 2.5rem;
+        box-shadow:0 4px 20px rgba(0,0,0,0.2);
+        transition:background 0.18s,transform 0.14s,box-shadow 0.18s"
+        onmouseover="this.style.background='#f0f9eb';this.style.transform='translateY(-2px)'"
+        onmouseout="this.style.background='#fff';this.style.transform='translateY(0)'">
+        Get Your Free Quote
+      </a>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       12. FOOTER
+       ════════════════════════════════════════════ -->
+  <footer class="bg-gray-950 text-white pt-16 pb-10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+
+        <!-- Brand -->
+        <div>
+          <div class="flex items-center gap-2.5 mb-4">
+            <span class="w-8 h-8 rounded-full flex items-center justify-center" style="background:linear-gradient(135deg,#3d8f1f 0%,#5ab133 100%)">
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 17c2-5 6-9 14-9-2 5-6 9-14 9z" fill="#fff" opacity="0.9"/><path d="M10 17c0-4-2-8-7-10 1 5 3 9 7 10z" fill="#fff"/></svg>
+            </span>
+            <span class="font-display font-700 text-xl text-white" style="letter-spacing:-0.02em">REGENT</span>
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed mb-5" style="line-height:1.7">
+            Professional lawn mowing &amp; cleaning services. Serving our community with pride, precision, and a satisfaction guarantee.
+          </p>
+          <!-- Social icons -->
+          <div class="flex gap-3">
+            <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-lg bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-regent-700 hover:text-white transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-lg bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-regent-700 hover:text-white transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+            </a>
+            <a href="#" aria-label="Google" class="w-9 h-9 rounded-lg bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-regent-700 hover:text-white transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div>
+          <h4 class="font-semibold text-white text-sm uppercase tracking-widest mb-5">Navigation</h4>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-400 text-sm hover:text-regent-400 transition-colors" style="text-decoration:none">Home</a></li>
+            <li><a href="#about" class="text-gray-400 text-sm hover:text-regent-400 transition-colors" style="text-decoration:none">About</a></li>
+            <li><a href="#services" class="text-gray-400 text-sm hover:text-regent-400 transition-colors" style="text-decoration:none">Services</a></li>
+            <li><a href="#reviews" class="text-gray-400 text-sm hover:text-regent-400 transition-colors" style="text-decoration:none">Reviews</a></li>
+            <li><a href="#contact" class="text-gray-400 text-sm hover:text-regent-400 transition-colors" style="text-decoration:none">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <h4 class="font-semibold text-white text-sm uppercase tracking-widest mb-5">Contact Us</h4>
+          <ul class="space-y-4">
+            <li class="flex items-start gap-3">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5ab133" stroke-width="2" stroke-linecap="round" class="mt-0.5 flex-shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.28h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.72 16.92z"/></svg>
+              <span class="text-gray-400 text-sm">(555) 000-0000</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5ab133" stroke-width="2" stroke-linecap="round" class="mt-0.5 flex-shrink-0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <span class="text-gray-400 text-sm">hello@regentlawn.com</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5ab133" stroke-width="2" stroke-linecap="round" class="mt-0.5 flex-shrink-0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="text-gray-400 text-sm">Serving the Greater Metro Area</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="border-t border-gray-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-gray-500 text-xs">&copy; 2026 Regent Lawn Mowing &amp; Cleaning Services. All rights reserved.</p>
+        <div class="flex gap-4">
+          <a href="#" class="text-gray-500 text-xs hover:text-gray-300 transition-colors" style="text-decoration:none">Privacy Policy</a>
+          <a href="#" class="text-gray-500 text-xs hover:text-gray-300 transition-colors" style="text-decoration:none">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════ Scroll-triggered fade-in ════ -->
+  <script>
+    const fadeEls = document.querySelectorAll('.fade-in')
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') }),
+      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+    )
+    fadeEls.forEach(el => observer.observe(el))
+    // Ensure elements already in viewport on load are shown immediately
+    requestAnimationFrame(() => {
+      fadeEls.forEach(el => {
+        const rect = el.getBoundingClientRect()
+        if (rect.top < window.innerHeight) el.classList.add('visible')
+      })
+    })
+  </script>
+
+</body>
+</html>
